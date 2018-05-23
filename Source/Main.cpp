@@ -1091,7 +1091,7 @@ private:
     
     void ledOn(int pedalIdx) {
         //sendMidiMessage(midiOut_, MidiMessage::controllerEvent(channel_, 106, ledNumber(pedalIdx)));
-        std::cout << "cc " << 106 << " " << ledNumber(pedalIdx) << std::endl;
+        std::cout << "cc " << 106 << " " << (int)ledNumber(pedalIdx) << std::endl;
         LED& led = leds_.getReference(pedalIdx);
         led.on_ = true;
         
@@ -1103,7 +1103,7 @@ private:
     
     void ledOff(int pedalIdx) {
         //sendMidiMessage(midiOut_, MidiMessage::controllerEvent(channel_, 107, ledNumber(pedalIdx)));
-        std::cout << "cc " << 107 << " " << ledNumber(pedalIdx) << std::endl;
+        std::cout << "cc " << 107 << " " << (int)ledNumber(pedalIdx) << std::endl;
 
         LED& led = leds_.getReference(pedalIdx);
         led.on_ = false;
@@ -1117,7 +1117,7 @@ private:
         if (selectedLoop_ / 10 > 0)
         {
             //sendMidiMessage(midiOut_, MidiMessage::controllerEvent(channel_, 113, (uint8)(selectedLoop_ / 10)));
-            std::cout << "cc " << 113 << " " << (uint8)(selectedLoop_ / 10) << std::endl;
+            std::cout << "cc " << 113 << " " << (int)(selectedLoop_ / 10) << std::endl;
         }
         else
         {
@@ -1126,7 +1126,7 @@ private:
         }
         
         //sendMidiMessage(midiOut_, MidiMessage::controllerEvent(channel_, 114, (uint8)(selectedLoop_ % 10)));
-        std::cout << "cc " << 114 << " " << (uint8)(selectedLoop_ % 10) << std::endl;
+        std::cout << "cc " << 114 << " " << (int)(selectedLoop_ % 10) << std::endl;
         
         if (oscLedSenderInitialized_)
         {
