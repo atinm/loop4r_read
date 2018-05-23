@@ -645,71 +645,71 @@ private:
         
         if (msg.isNoteOn())
         {
-            std::cout << "channel "  << outputChannel(msg) << "   " <<
+            std::cerr << "channel "  << outputChannel(msg) << "   " <<
             "note-on         " << outputNote(msg) << " " << output7Bit(msg.getVelocity()).paddedLeft(' ', 3) << std::endl;
         }
         else if (msg.isNoteOff())
         {
-            std::cout << "channel "  << outputChannel(msg) << "   " <<
+            std::cerr << "channel "  << outputChannel(msg) << "   " <<
             "note-off        " << outputNote(msg) << " " << output7Bit(msg.getVelocity()).paddedLeft(' ', 3) << std::endl;
         }
         else if (msg.isAftertouch())
         {
-            std::cout << "channel "  << outputChannel(msg) << "   " <<
+            std::cerr << "channel "  << outputChannel(msg) << "   " <<
             "poly-pressure   " << outputNote(msg) << " " << output7Bit(msg.getAfterTouchValue()).paddedLeft(' ', 3) << std::endl;
         }
         else if (msg.isController())
         {
-            std::cout << "channel "  << outputChannel(msg) << "   " <<
+            std::cerr << "channel "  << outputChannel(msg) << "   " <<
             "control-change   " << output7Bit(msg.getControllerNumber()).paddedLeft(' ', 3) << " "
             << output7Bit(msg.getControllerValue()).paddedLeft(' ', 3) << std::endl;
         }
         else if (msg.isProgramChange())
         {
-            std::cout << "channel "  << outputChannel(msg) << "   " <<
+            std::cerr << "channel "  << outputChannel(msg) << "   " <<
             "program-change   " << output7Bit(msg.getProgramChangeNumber()).paddedLeft(' ', 7) << std::endl;
         }
         else if (msg.isChannelPressure())
         {
-            std::cout << "channel "  << outputChannel(msg) << "   " <<
+            std::cerr << "channel "  << outputChannel(msg) << "   " <<
             "channel-pressure " << output7Bit(msg.getChannelPressureValue()).paddedLeft(' ', 7) << std::endl;
         }
         else if (msg.isPitchWheel())
         {
-            std::cout << "channel "  << outputChannel(msg) << "   " <<
+            std::cerr << "channel "  << outputChannel(msg) << "   " <<
             "pitch-bend       " << output14Bit(msg.getPitchWheelValue()).paddedLeft(' ', 7) << std::endl;
         }
         else if (msg.isMidiClock())
         {
-            std::cout << "midi-clock" << std::endl;
+            std::cerr << "midi-clock" << std::endl;
         }
         else if (msg.isMidiStart())
         {
-            std::cout << "start" << std::endl;
+            std::cerr << "start" << std::endl;
         }
         else if (msg.isMidiStop())
         {
-            std::cout << "stop" << std::endl;
+            std::cerr << "stop" << std::endl;
         }
         else if (msg.isMidiContinue())
         {
-            std::cout << "continue" << std::endl;
+            std::cerr << "continue" << std::endl;
         }
         else if (msg.isActiveSense())
         {
-            std::cout << "active-sensing" << std::endl;
+            std::cerr << "active-sensing" << std::endl;
         }
         else if (msg.getRawDataSize() == 1 && msg.getRawData()[0] == 0xff)
         {
-            std::cout << "reset" << std::endl;
+            std::cerr << "reset" << std::endl;
         }
         else if (msg.isSysEx())
         {
-            std::cout << "system-exclusive";
+            std::cerr << "system-exclusive";
             
             if (!useHexadecimalsByDefault_)
             {
-                std::cout << " hex";
+                std::cerr << " hex";
             }
             
             int size = msg.getSysExDataSize();
@@ -717,29 +717,29 @@ private:
             while (size--)
             {
                 uint8 b = *data++;
-                std::cout << " " << output7BitAsHex(b);
+                std::cerr << " " << output7BitAsHex(b);
             }
             
             if (!useHexadecimalsByDefault_)
             {
-                std::cout << " dec" << std::endl;
+                std::cerr << " dec" << std::endl;
             }
         }
         else if (msg.isQuarterFrame())
         {
-            std::cout << "time-code " << output7Bit(msg.getQuarterFrameSequenceNumber()).paddedLeft(' ', 2) << " " << output7Bit(msg.getQuarterFrameValue()) << std::endl;
+            std::cerr << "time-code " << output7Bit(msg.getQuarterFrameSequenceNumber()).paddedLeft(' ', 2) << " " << output7Bit(msg.getQuarterFrameValue()) << std::endl;
         }
         else if (msg.isSongPositionPointer())
         {
-            std::cout << "song-position " << output14Bit(msg.getSongPositionPointerMidiBeat()).paddedLeft(' ', 5) << std::endl;
+            std::cerr << "song-position " << output14Bit(msg.getSongPositionPointerMidiBeat()).paddedLeft(' ', 5) << std::endl;
         }
         else if (msg.getRawDataSize() == 2 && msg.getRawData()[0] == 0xf3)
         {
-            std::cout << "song-select " << output7Bit(msg.getRawData()[1]).paddedLeft(' ', 3) << std::endl;
+            std::cerr << "song-select " << output7Bit(msg.getRawData()[1]).paddedLeft(' ', 3) << std::endl;
         }
         else if (msg.getRawDataSize() == 1 && msg.getRawData()[0] == 0xf6)
         {
-            std::cout << "tune-request" << std::endl;
+            std::cerr << "tune-request" << std::endl;
         }
     }
     
@@ -833,7 +833,7 @@ private:
     bool tryToConnectOsc() {
         if (currentSendPort_ < 0) {
             if (oscSender.connect ("127.0.0.1", oscSendPort_)) {
-                std::cout << "Successfully connected to OSC Send port " << (int)oscSendPort_ << std::endl;
+                std::cerr << "Successfully connected to OSC Send port " << (int)oscSendPort_ << std::endl;
                 currentSendPort_ = oscSendPort_;
             }
         }
@@ -856,7 +856,7 @@ private:
     bool tryToConnectLedOsc() {
         if (currentLedSendPort_ < 0) {
             if (oscLedSender.connect ("127.0.0.1", oscLedSendPort_)) {
-                std::cout << "Successfully connected to OSC LED Send port " << (int)oscLedSendPort_ << std::endl;
+                std::cerr << "Successfully connected to OSC LED Send port " << (int)oscLedSendPort_ << std::endl;
                 currentLedSendPort_ = oscLedSendPort_;
             }
         }
@@ -874,15 +874,15 @@ private:
             case NONE:
                 break;
             case LIST:
-                std::cout << "MIDI Input devices:" << std::endl;
+                std::cerr << "MIDI Input devices:" << std::endl;
                 for (auto&& device : MidiInput::getDevices())
                 {
-                    std::cout << device << std::endl;
+                    std::cerr << device << std::endl;
                 }
-                std::cout << "MIDI Output devices:" << std::endl;
+                std::cerr << "MIDI Output devices:" << std::endl;
                 for (auto&& device : MidiOutput::getDevices())
                 {
-                    std::cout << device << std::endl;
+                    std::cerr << device << std::endl;
                 }
                 systemRequestedQuit();
                 break;
@@ -1091,6 +1091,7 @@ private:
     
     void ledOn(int pedalIdx) {
         //sendMidiMessage(midiOut_, MidiMessage::controllerEvent(channel_, 106, ledNumber(pedalIdx)));
+        std::cout << "cc " << 106 << " " << ledNumber(pedalIdx) << std::endl;
         LED& led = leds_.getReference(pedalIdx);
         led.on_ = true;
         
@@ -1102,6 +1103,8 @@ private:
     
     void ledOff(int pedalIdx) {
         //sendMidiMessage(midiOut_, MidiMessage::controllerEvent(channel_, 107, ledNumber(pedalIdx)));
+        std::cout << "cc " << 107 << " " << ledNumber(pedalIdx) << std::endl;
+
         LED& led = leds_.getReference(pedalIdx);
         led.on_ = false;
         if (oscLedSenderInitialized_)
@@ -1111,6 +1114,20 @@ private:
     }
     
     void selectLoop() {
+        if (selectedLoop_ / 10 > 0)
+        {
+            //sendMidiMessage(midiOut_, MidiMessage::controllerEvent(channel_, 113, (uint8)(selectedLoop_ / 10)));
+            std::cout << "cc " << 113 << " " << (uint8)(selectedLoop_ / 10) << std::endl;
+        }
+        else
+        {
+            //sendMidiMessage(midiOut_, MidiMessage::controllerEvent(channel_, 113, (uint8)0));
+            std::cout << "cc " << 113 << " 0" << std::endl;
+        }
+        
+        //sendMidiMessage(midiOut_, MidiMessage::controllerEvent(channel_, 114, (uint8)(selectedLoop_ % 10)));
+        std::cout << "cc " << 114 << " " << (uint8)(selectedLoop_ % 10) << std::endl;
+        
         if (oscLedSenderInitialized_)
         {
             oscLedSender.send("/display", (int)selectedLoop_);
@@ -1523,7 +1540,7 @@ private:
     {
         if (!message.getAddressPattern().toString().startsWith("/heartbeat") && !message.getAddressPattern().toString().startsWith("/loop4r/ping") )
         {
-            std::cout << "-" <<
+            std::cerr << "-" <<
             + "- osc message, address = '"
             + message.getAddressPattern().toString()
             + "', "
@@ -1561,7 +1578,7 @@ private:
                     typeAsString = "(unknown)";
                 }
                 
-                std::cout << "==- " + typeAsString.paddedRight(' ', 12) + valueAsString << std::endl;
+                std::cerr << "==- " + typeAsString.paddedRight(' ', 12) + valueAsString << std::endl;
                 
             }
         }
@@ -1656,7 +1673,7 @@ private:
     
     void handleInvalidPortNumberEntered()
     {
-        std::cout << "Error: you have entered an invalid UDP port number." << std::endl;
+        std::cerr << "Error: you have entered an invalid UDP port number." << std::endl;
     }
     
     bool isConnected() const
@@ -1671,35 +1688,35 @@ private:
     
     void printVersion()
     {
-        std::cout << ProjectInfo::projectName << " v" << ProjectInfo::versionString << std::endl;
-        std::cout << "https://github.com/atinm/loop4r_control" << std::endl;
+        std::cerr << ProjectInfo::projectName << " v" << ProjectInfo::versionString << std::endl;
+        std::cerr << "https://github.com/atinm/loop4r_control" << std::endl;
     }
     
     void printUsage()
     {
         printVersion();
-        std::cout << std::endl;
-        std::cout << "Usage: " << ProjectInfo::projectName << " [ commands ] [ programfile ] [ -- ]" << std::endl << std::endl
+        std::cerr << std::endl;
+        std::cerr << "Usage: " << ProjectInfo::projectName << " [ commands ] [ programfile ] [ -- ]" << std::endl << std::endl
         << "Commands:" << std::endl;
         for (auto&& cmd : commands_)
         {
-            std::cout << "  " << cmd.param_.paddedRight(' ', 5);
+            std::cerr << "  " << cmd.param_.paddedRight(' ', 5);
             if (cmd.optionsDescription_.isNotEmpty())
             {
-                std::cout << " " << cmd.optionsDescription_.paddedRight(' ', 13);
+                std::cerr << " " << cmd.optionsDescription_.paddedRight(' ', 13);
             }
             else
             {
-                std::cout << "              ";
+                std::cerr << "              ";
             }
-            std::cout << "  " << cmd.commandDescription_;
-            std::cout << std::endl;
+            std::cerr << "  " << cmd.commandDescription_;
+            std::cerr << std::endl;
         }
-        std::cout << "  -h  or  --help       Print Help (this message) and exit" << std::endl;
-        std::cout << "  --version            Print version information and exit" << std::endl;
-        std::cout << "  --                   Read commands from standard input until it's closed" << std::endl;
-        std::cout << std::endl;
-        std::cout << "Alternatively, you can use the following long versions of the commands:" << std::endl;
+        std::cerr << "  -h  or  --help       Print Help (this message) and exit" << std::endl;
+        std::cerr << "  --version            Print version information and exit" << std::endl;
+        std::cerr << "  --                   Read commands from standard input until it's closed" << std::endl;
+        std::cerr << std::endl;
+        std::cerr << "Alternatively, you can use the following long versions of the commands:" << std::endl;
         String line = " ";
         for (auto&& cmd : commands_)
         {
@@ -1707,22 +1724,22 @@ private:
             {
                 if (line.length() + cmd.altParam_.length() + 1 >= 80)
                 {
-                    std::cout << line << std::endl;
+                    std::cerr << line << std::endl;
                     line = " ";
                 }
                 line << " " << cmd.altParam_;
             }
         }
-        std::cout << line << std::endl << std::endl;
-        std::cout << "By default, numbers are interpreted in the decimal system, this can be changed" << std::endl
+        std::cerr << line << std::endl << std::endl;
+        std::cerr << "By default, numbers are interpreted in the decimal system, this can be changed" << std::endl
         << "to hexadecimal by sending the \"hex\" command. Additionally, by suffixing a " << std::endl
         << "number with \"M\" or \"H\", it will be interpreted as a decimal or hexadecimal" << std::endl
         << "respectively." << std::endl;
-        std::cout << std::endl;
-        std::cout << "The MIDI device name doesn't have to be an exact match." << std::endl;
-        std::cout << "If " << getApplicationName() << " can't find the exact name that was specified, it will pick the" << std::endl
+        std::cerr << std::endl;
+        std::cerr << "The MIDI device name doesn't have to be an exact match." << std::endl;
+        std::cerr << "If " << getApplicationName() << " can't find the exact name that was specified, it will pick the" << std::endl
         << "first MIDI output port that contains the provided text, irrespective of case." << std::endl;
-        std::cout << std::endl;
+        std::cerr << std::endl;
     }
     
     OSCReceiver oscReceiver;
